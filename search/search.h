@@ -4,8 +4,7 @@
 #include <string>
 
 extern "C" {
-  void search();
+  std::string search(std::string query);
 }
-// void toClipboard(const std::string &s);
 
 #endif

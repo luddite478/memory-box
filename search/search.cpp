@@ -2,20 +2,20 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <cstdlib>
 
 #include "search.h"
 
 using namespace std;
 
-void search()
+std::string search(std::string query)
 {
-  string contentsFileName = "contents.txt";
-  string searchStr;
+  string contentsFileName = "../contents.txt";
   string line;
   ifstream file;
   vector <string> fileNames;
 
-  // Contents txt
+  // read contents.txt
   file.open(contentsFileName);
   if(file.is_open())
   {
@@ -30,24 +30,22 @@ void search()
       cout << "Can't open contents file" << endl;
   }
 
-  cout << "Search: \n" << endl;
-  getline(cin, searchStr);
-
-  // files
+  // search in each file from contents.txt
   for(std::vector<string>::reverse_iterator it = fileNames.rbegin(); it != fileNames.rend(); ++it)
   {
     string fileName = *it;
-
-    file.open("./files/" + fileName);
+    file.open("../files/" + fileName);
     if(file.is_open()){
+      bool returnNextLine = false;
+      //lines iterations
       while(!file.eof())
       {
         getline(file, line);
-
-        if(line.find(searchStr) != string::npos)
-        {
-          system(("cd files & " + fileName  ).c_str());
+        if(returnNextLine){
+          returnNextLine = false;
+          return line;
         }
+        if(line.find(query) != string::npos) returnNextLine = true;
       }
       file.close();
     } else {
@@ -55,18 +53,3 @@ void search()
     }
   }
 }
-
-// void toClipboard(const std::string &s){
-//   OpenClipboard(0);
-//   EmptyClipboard();
-//   HGLOBAL hg=GlobalAlloc(GMEM_MOVEABLE,s.size());
-//   if (!hg){
-//   CloseClipboard();
-//   return;
-//   }
-//   memcpy(GlobalLock(hg),s.c_str(),s.size());
-//   GlobalUnlock(hg);
-//   SetClipboardData(CF_TEXT,hg);
-//   CloseClipboard();
-//   GlobalFree(hg);
-// }
