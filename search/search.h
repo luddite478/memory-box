@@ -2,9 +2,12 @@
 #define SEARCH_H
 
 #include <string>
+#include <vector>
+
+using namespace std;
 
 extern "C" {
-  std::string search(std::string query);
+  string search(string query, vector<string> fileNames);
 }
 
 #endif
