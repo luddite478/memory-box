@@ -1,2 +1,1 @@
-Something like Google for local files.
-Current version only copies passwords for demanded resources to clipboard.
+Copies passwords for demanded resources from txt file to clipboard.
